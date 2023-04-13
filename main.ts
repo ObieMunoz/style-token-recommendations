@@ -60,6 +60,8 @@ async function processFile(filePath: string): Promise<Map<string, string[]>> {
 }
 
 async function traverseDir(dirPath: string, startPath: string) {
+  let output = "";
+
   for (const entry of fs.readdirSync(dirPath)) {
     const entryPath = path.join(dirPath, entry);
     const entryStats = fs.statSync(entryPath);
@@ -68,15 +70,28 @@ async function traverseDir(dirPath: string, startPath: string) {
       const fileResults = await processFile(entryPath);
       fileResults.forEach((results, filePath) => {
         const relativePath = path.relative(startPath, filePath);
-        console.log(`File: ${relativePath}`);
-        results.forEach((result) => console.log(result));
-        console.log("");
+        const fileOutput = `\nFile: ${relativePath}\n${results.join("\n")}\n`;
+
+        console.log(fileOutput);
+        output += fileOutput;
       });
     } else if (entryStats.isDirectory()) {
-      await traverseDir(entryPath, startPath);
+      output += await traverseDir(entryPath, startPath);
     }
   }
+
+  return output;
 }
 
-const startPath = process.cwd();
-traverseDir(startPath, startPath);
+(async () => {
+  const startPath = process.cwd();
+  const output = await traverseDir(startPath, startPath);
+
+  fs.writeFile("Output.txt", output, (err) => {
+    if (err) {
+      console.error("Error writing OUTPUT.txt:", err);
+    } else {
+      console.log("\nOutput saved to OUTPUT.txt");
+    }
+  });
+})();
