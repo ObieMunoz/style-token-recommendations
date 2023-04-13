@@ -1,0 +1,17 @@
+{
+  "name": "token-recommendations",
+  "version": "1.0.0",
+  "description": "A TypeScript/Node.js utility that scans a project's directory for Svelte, CSS, and SCSS files, and analyzes their styles containing pixel values. It aims to identify and suggest appropriate spacing tokens (in rem units) as replacements for hardcoded pixel values to improve consistency and maintainability across the project. The program traverses all nested folders starting from the current working directory and generates a report for each file containing the line number, style name, original pixel value, and the recommended spacing token. This utility is designed to help developers adhere to a predefined set of spacing values and make the process of updating and managing styles more efficient.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}
